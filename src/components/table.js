@@ -27,20 +27,6 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function createData(name, calories, fat, carbs, protein, c) {
-  return { name, calories, fat, carbs, protein, c };
-}
-
-const a = ['Frozen yoghurt', 159, 6.0, 24, 4.0, 1]
-
-const rows = [
-  createData(a),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 1),
-  createData('Eclair', 262, 16.0, 24, 6.0, 1),
-  createData('Cupcake', 305, 3.7, 67, 4.3, 1),
-  createData('Gingerbread', 356, 16.0, 49, 3.9, 1),
-];
-
 const useStyles = makeStyles({
   root: {
     margin: '40px 0px'
@@ -79,7 +65,7 @@ export default function CustomizedTables(csvData) {
           </TableHead>
           <TableBody>
             {
-              Object.keys(csvData).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((key, index) => {
+              Object.keys(csvData).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage + 1).map((key, index) => {
                 if (index !== 0 || page !== 0) { // 0th index is usually data header
                   return <StyledTableRow key={csvData[key][0]}>
                     <StyledTableCell component="th" scope="row">
@@ -100,7 +86,7 @@ export default function CustomizedTables(csvData) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={Object.keys(csvData).length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
