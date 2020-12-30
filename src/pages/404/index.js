@@ -8,6 +8,7 @@ const Error404 = () => {
       <Typography variant="h6">Available routes are</Typography>
       <Typography>/image-canvas</Typography>
       <Typography>/csv-upload</Typography>
+      <Typography>/pdf-cert</Typography>
     </div>
   )
 }

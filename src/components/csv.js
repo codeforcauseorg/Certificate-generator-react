@@ -1,5 +1,5 @@
 import { Button, Container, makeStyles } from '@material-ui/core'
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import { CSVReader } from 'react-papaparse'
 import Table from './table'
 
@@ -9,10 +9,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '20px',
     padding: '8px 24px',
     backgroundColor: 'pink'
-    // '&, .MuiButton-root.Mui-disabled': {
-    //   backgroundColor: '#AC4f00',
-    //   color: '#fff',
-    // },
   }
 }))
 
@@ -29,7 +25,7 @@ const CsvReaderComponent = () => {
     const dataArray = []
 
     data.map((element) => {
-      dataArray.push(element.data)
+      return dataArray.push(element.data)
     })
 
     setCsvData(dataArray)
