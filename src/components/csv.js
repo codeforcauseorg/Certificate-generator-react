@@ -35,9 +35,11 @@ const CsvReaderComponent = () => {
     setCsvData(dataArray)
 
     if (
-      !(file.type === 'text/csv' ||
+      !(
+        file.type === 'text/csv' ||
         file.type === '.csv' ||
-        file.type === 'application/vnd.ms-excel')
+        file.type === 'application/vnd.ms-excel'
+      )
     ) {
       handleOnError(
         'File not compatible',

@@ -1,11 +1,6 @@
 import ImageEditing from './components/image/cecrtificateGeneratorByImage'
+import Routes from './Routes'
 
-function App() {
-  return (
-    <div className="App">
-      <ImageEditing />
-    </div>
-  )
-}
+const App = () => <Routes />
 
 export default App
