@@ -1,14 +1,11 @@
-import logo from './logo.svg'
-import './App.css'
-import CsvUpload from './pages/csv/csvUpload'
-
+import ImageEditing from './components/image/cecrtificateGeneratorByImage'
 
 function App() {
   return (
     <div className="App">
-      <CsvUpload />
+      <ImageEditing />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
