@@ -1,10 +1,79 @@
-import { Button } from '@material-ui/core'
-import React, { useRef, useEffect } from 'react'
+import {
+  Button,
+  Divider,
+  Drawer,
+  Fab,
+  makeStyles,
+  TextField,
+  Typography
+} from '@material-ui/core'
+import React, { useRef, useEffect, useState } from 'react'
 import jsPDF from 'jspdf'
+import EditIcon from '@material-ui/icons/Edit'
+import CloseIcon from '@material-ui/icons/Close'
+import clsx from 'clsx'
+
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import ButtonComponent from '../Button'
+
+import IconButton from '@material-ui/core/IconButton'
+const drawerWidth = 260
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    textAlign: 'center',
+    marginTop: theme.spacing(3)
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    backgroundColor: 'grey'
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing(5),
+    right: theme.spacing(5)
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    // margin: theme.spacing(30, 1, 0),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-start',
+    cursor: 'pointer'
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    marginRight: drawerWidth
+  },
+  textField: {
+    marginTop: '20px',
+    backgroundColor: '#f7f7f7'
+  },
+  btn: {
+    margin: theme.spacing(2, 1, 0),
+    padding: theme.spacing(1.5, 2)
+  }
+}))
 
 function CertificateGeneratorByImage() {
+  const classes = useStyles()
   const canvas = useRef()
   let ctx = null
+
+  const defaultValue = { x: 285, y: 200, size: 30 }
+
+  const [textDrawProperties, setTextDrawProperties] = useState(defaultValue)
+  const [open, setOpen] = React.useState(true)
 
   useEffect(() => {
     // dynamically assign the width and height to canvas
@@ -22,7 +91,7 @@ function CertificateGeneratorByImage() {
 
   useEffect(() => {
     updateCanvas()
-  }, [])
+  })
 
   function downloadImage(uri, name) {
     var link = document.createElement('a')
@@ -44,30 +113,127 @@ function CertificateGeneratorByImage() {
   }
 
   function updateCanvas() {
+    // var {x, y} = cordinates
+    const canvasEle = canvas.current
+    ctx = canvasEle.getContext('2d')
     var imageObj1 = new Image()
     imageObj1.src = 't1.png'
     imageObj1.onload = function () {
       ctx.drawImage(imageObj1, 0, 0)
-      ctx.font = '30pt Ubuntu'
+      ctx.font = `${textDrawProperties.size}pt Ubuntu`
       ctx.fillStyle = 'white'
-      ctx.fillText('Abhishek Kumar', 285, 200)
+      ctx.fillText('Abhishek Kumar', textDrawProperties.x, textDrawProperties.y)
     }
   }
 
+  const handleChange = (e) => {
+    setTextDrawProperties({
+      ...textDrawProperties,
+      [e.target.name]: e.target.value
+    })
+    console.log(e.target.name)
+  }
+
+  const resetToDefault = () => {
+    setTextDrawProperties(defaultValue)
+  }
+
   return (
-    <div>
-      <Button
-        onClick={() => {
-          const c = document.getElementById('canvasa')
-          console.log(c.toDataURL('png'))
-          downloadPdf(c.toDataURL('png'), 'certificate-pdf')
-          downloadImage(c.toDataURL('png'), 'certificate-image')
-          // window.open(c.toDataURL('png'))
-        }}
+    <div
+      className={clsx(classes.root, {
+        [classes.appBarShift]: open
+      })}
+    >
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="right"
+        open={open}
       >
-        Download
-      </Button>
-      <canvas ref={canvas} id="canvasa"></canvas>
+        <TextField
+          className={classes.textField}
+          value={textDrawProperties.x}
+          name="x"
+          id="outlined-numberX"
+          label="Horizontal Position"
+          type="number"
+          onChange={handleChange}
+          InputLabelProps={{
+            shrink: true
+          }}
+          variant="outlined"
+        />
+        <TextField
+          className={classes.textField}
+          id="outlined-numberY"
+          name="y"
+          value={textDrawProperties.y}
+          label="Vertical Position"
+          type="number"
+          onChange={handleChange}
+          InputLabelProps={{
+            shrink: true
+          }}
+          variant="outlined"
+        />
+        <TextField
+          className={classes.textField}
+          id="fontSize"
+          name="size"
+          label="fontSize"
+          value={textDrawProperties.size}
+          type="number"
+          onChange={handleChange}
+          variant="outlined"
+        />
+        <ButtonComponent
+          className={classes.btn}
+          title="Reset To Default"
+          onClick={() => {
+            resetToDefault()
+          }}
+        ></ButtonComponent>
+        <Divider />
+        <ButtonComponent
+          className={classes.btn}
+          title="Download"
+          style={{
+            backgroundColor: '#03506a'
+          }}
+          onClick={() => {
+            const c = canvas.current
+            downloadPdf(c.toDataURL('png'), 'certificate-pdf')
+            downloadImage(c.toDataURL('png'), 'certificate-image')
+          }}
+        />
+        <Divider style={{ marginTop: '35vh' }} />
+        <div
+          className={classes.drawerHeader}
+          onClick={() => {
+            setOpen(!open)
+          }}
+        >
+          <IconButton>
+            <ChevronRightIcon />
+          </IconButton>
+          <Typography style={{ display: 'inline' }}>Close</Typography>
+        </div>
+      </Drawer>
+
+      <canvas ref={canvas}></canvas>
+      {!open ? (
+        <Fab
+          className={classes.fab}
+          color="primary"
+          onClick={() => {
+            setOpen(!open)
+          }}
+        >
+          {open ? <CloseIcon /> : <EditIcon />}
+        </Fab>
+      ) : (
+        <></>
+      )}
     </div>
   )
 }

@@ -43,12 +43,12 @@ const themeConfig = {
   palette: {
     type: 'light',
     action: {
-      active: colors.blueGrey[600] //small icons
+      active: '#03506a' //small icons
     },
     background: {
       default: '#F5F5F5',
       dark: '#f4f6f8',
-      paper: 'e0dee1' // background
+      paper: '#e0dee1' // background
     },
     primary: {
       main: '#F1002D' // for header and loader
@@ -59,7 +59,7 @@ const themeConfig = {
     text: {
       // for text classes
       primary: '#000',
-      secondary: colors.blueGrey[600]
+      secondary: '#03506a'
     }
   },
   shadows: softShadows
