@@ -1,5 +1,4 @@
 import {
-  Button,
   Divider,
   Drawer,
   Fab,
@@ -7,23 +6,21 @@ import {
   TextField,
   Typography
 } from '@material-ui/core'
-import React, { useRef, useEffect, useState } from 'react'
-import jsPDF from 'jspdf'
-import EditIcon from '@material-ui/icons/Edit'
-import CloseIcon from '@material-ui/icons/Close'
-import clsx from 'clsx'
-
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import ButtonComponent from '../Button'
-
 import IconButton from '@material-ui/core/IconButton'
-const drawerWidth = 260
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import CloseIcon from '@material-ui/icons/Close'
+import EditIcon from '@material-ui/icons/Edit'
+import clsx from 'clsx'
+import jsPDF from 'jspdf'
+import React, { useEffect, useRef, useState } from 'react'
+import { drawerWidth } from '../../constants'
+import ButtonComponent from '../Button'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    textAlign: 'center',
-    marginTop: theme.spacing(3)
+    // textAlign: 'center',
+    padding: theme.spacing(3),
+    marginTop: theme.spacing(5)
   },
   drawer: {
     width: drawerWidth,
@@ -70,7 +67,7 @@ function CertificateGeneratorByImage() {
   const canvas = useRef()
   let ctx = null
 
-  const defaultValue = { x: 285, y: 200, size: 30 }
+  const defaultValue = { x: 289, y: 200, size: 37 }
 
   const [textDrawProperties, setTextDrawProperties] = useState(defaultValue)
   const [open, setOpen] = React.useState(true)
