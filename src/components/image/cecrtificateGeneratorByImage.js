@@ -15,6 +15,7 @@ import jsPDF from 'jspdf'
 import React, { useEffect, useRef, useState } from 'react'
 import { drawerWidth } from '../../constants'
 import ButtonComponent from '../Button'
+import templates from '../../data'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,8 +54,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: drawerWidth
   },
   textField: {
-    marginTop: '20px',
-    backgroundColor: '#f7f7f7'
+    margin: '20px 4px 0px',
+    backgroundColor: '#f7f7f7',
+    width: '120px'
   },
   btn: {
     margin: theme.spacing(2, 1, 0),
@@ -67,11 +69,12 @@ function CertificateGeneratorByImage() {
   const canvas = useRef()
   let ctx = null
 
-  const defaultValue = { x: 289, y: 200, size: 37 }
+  const currentValue = templates.png[0].text
 
-  const [textDrawProperties, setTextDrawProperties] = useState(defaultValue)
+  const [textDrawProperties, setTextDrawProperties] = useState(currentValue)
   const [open, setOpen] = React.useState(true)
 
+  console.log(textDrawProperties)
   useEffect(() => {
     // dynamically assign the width and height to canvas
     const canvasEle = canvas.current
@@ -104,7 +107,6 @@ function CertificateGeneratorByImage() {
     const imgProps = pdf.getImageProperties(uri)
     const pdfWidth = pdf.internal.pageSize.getWidth()
     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width
-    console.log(pdfHeight + '*********' + pdfWidth)
     pdf.addImage(uri, 'JPEG', 0, 0, pdfWidth, pdfHeight)
     pdf.save(`${name}.pdf`)
   }
@@ -117,22 +119,40 @@ function CertificateGeneratorByImage() {
     imageObj1.src = 't1.png'
     imageObj1.onload = function () {
       ctx.drawImage(imageObj1, 0, 0)
-      ctx.font = `${textDrawProperties.size}pt Ubuntu`
-      ctx.fillStyle = 'white'
-      ctx.fillText('Abhishek Kumar', textDrawProperties.x, textDrawProperties.y)
+      textDrawProperties.map((text) => {
+        ctx.font = `${text.size}pt Ubuntu`
+        ctx.fillStyle = 'white'
+        ctx.fillText(text.title, text.x, text.y)
+      })
     }
   }
 
-  const handleChange = (e) => {
-    setTextDrawProperties({
-      ...textDrawProperties,
-      [e.target.name]: e.target.value
-    })
-    console.log(e.target.name)
+  const handleChange = (index) => (e) => {
+    let newArray = [...textDrawProperties]
+    newArray[index][e.target.name] = e.target.value
+    setTextDrawProperties(newArray)
   }
 
   const resetToDefault = () => {
-    setTextDrawProperties(defaultValue)
+    window.location.reload()
+  }
+
+  const addField = () => {
+    setTextDrawProperties([
+      ...textDrawProperties,
+      {
+        title: 'Title',
+        x: Math.floor(Math.random() * 100) + 80,
+        y: Math.floor(Math.random() * 100) + 80,
+        size: 50
+      }
+    ])
+  }
+
+  const removeField = (index) => {
+    let arr = [...textDrawProperties]
+    arr.splice(index, 1)
+    setTextDrawProperties(arr)
   }
 
   return (
@@ -147,41 +167,77 @@ function CertificateGeneratorByImage() {
         anchor="right"
         open={open}
       >
-        <TextField
-          className={classes.textField}
-          value={textDrawProperties.x}
-          name="x"
-          id="outlined-numberX"
-          label="Horizontal Position"
-          type="number"
-          onChange={handleChange}
-          InputLabelProps={{
-            shrink: true
-          }}
-          variant="outlined"
-        />
-        <TextField
-          className={classes.textField}
-          id="outlined-numberY"
-          name="y"
-          value={textDrawProperties.y}
-          label="Vertical Position"
-          type="number"
-          onChange={handleChange}
-          InputLabelProps={{
-            shrink: true
-          }}
-          variant="outlined"
-        />
-        <TextField
-          className={classes.textField}
-          id="fontSize"
-          name="size"
-          label="fontSize"
-          value={textDrawProperties.size}
-          type="number"
-          onChange={handleChange}
-          variant="outlined"
+        <ul>
+          {textDrawProperties.map((properties, index) => (
+            <li key={index}>
+              <div style={{ display: 'block', marginTop: '20px' }}>
+                <TextField
+                  name="title"
+                  value={properties.title}
+                  onChange={handleChange(index)}
+                />
+                <Fab
+                  variant="extended"
+                  size="small"
+                  style={{
+                    position: 'absolute',
+                    backgroundColor: 'red',
+                    color: 'white'
+                  }}
+                  onClick={() => removeField(index)}
+                >
+                  {/* <RemoveIcon /> */}
+                  <Typography variant="caption" style={{ fontWeight: 600 }}>
+                    Delete
+                  </Typography>
+                </Fab>
+              </div>
+              <TextField
+                className={classes.textField}
+                value={properties.x}
+                name="x"
+                id="outlined-numberX"
+                label="X"
+                type="number"
+                onChange={handleChange(index)}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                variant="outlined"
+              />
+              <TextField
+                className={classes.textField}
+                id="outlined-numberY"
+                name="y"
+                value={properties.y}
+                label="Y"
+                type="number"
+                onChange={handleChange(index)}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                variant="outlined"
+              />
+              <TextField
+                className={classes.textField}
+                id="fontSize"
+                name="size"
+                label="Size"
+                value={properties.size}
+                type="number"
+                onChange={handleChange(index)}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                variant="outlined"
+              />
+            </li>
+          ))}
+        </ul>
+        <ButtonComponent
+          title="Add Field"
+          className={classes.btn}
+          onClick={addField}
         />
         <ButtonComponent
           className={classes.btn}
@@ -190,7 +246,6 @@ function CertificateGeneratorByImage() {
             resetToDefault()
           }}
         ></ButtonComponent>
-        <Divider />
         <ButtonComponent
           className={classes.btn}
           title="Download"
@@ -203,7 +258,7 @@ function CertificateGeneratorByImage() {
             downloadImage(c.toDataURL('png'), 'certificate-image')
           }}
         />
-        <Divider style={{ marginTop: '35vh' }} />
+        <Divider style={{ marginTop: '0vh' }} />
         <div
           className={classes.drawerHeader}
           onClick={() => {

@@ -1,5 +1,5 @@
 import Routes from './Routes'
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import { ThemeProvider } from '@material-ui/core/styles'
 import { createTheme } from './theme'
 
 const App = () => (

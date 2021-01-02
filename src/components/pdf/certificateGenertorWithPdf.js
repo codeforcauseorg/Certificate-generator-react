@@ -119,6 +119,8 @@ const CertificateGeneratorWithPdf = () => {
         <></>
       )}
 
+      <Typography>Click on show pdf changes to see the made changes</Typography>
+
       <Drawer
         className={classes.drawer}
         variant="persistent"

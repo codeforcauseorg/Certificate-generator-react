@@ -76,3 +76,5 @@ const createTheme = () => {
 }
 
 export { createTheme }
+
+// https://coolors.co/f1002d-ee6401-f9af28-03506a-62a7c4-e0dee1
