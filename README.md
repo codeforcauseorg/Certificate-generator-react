@@ -2,13 +2,13 @@
 
 **setup**:
   1. run client with:
-    a. cd client
-    b. npm install
-    c. npm run start
+      a. cd client<br />
+      b. npm install<br />
+      c. npm run start<br />
   2. run server (on different terminal) 
-    a. cd server
-    b. npm install
-    c. npm run start
+      a. cd server<br />
+      b. npm install<br />
+      c. npm run start<br />
 
 On the client, move to csv-upload page:
 - upload csv
