@@ -21,19 +21,19 @@ const templates = {
       type: 'png',
       text: [
         {
-          title: 'Abhishek Kumar',
+          title: 'Field 1',
           x: 289,
           y: 200,
           size: 37
         },
         {
-          title: 'Anuj  Garg',
+          title: 'Field 2',
           x: 340,
           y: 440,
           size: 18
         },
         {
-          title: 'Ganga Chartvedi',
+          title: 'Field 3',
           x: 560,
           y: 440,
           size: 18

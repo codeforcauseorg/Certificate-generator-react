@@ -3,7 +3,9 @@ import React from 'react'
 import CertificateGeneratorByImage from '../../components/image/cecrtificateGeneratorByImage'
 
 const ImageCanvas = (props) => {
-  console.log(props)
+  if (props.location.state === undefined) {
+    return <div>Please select Data Fields from the previous page</div>
+  }
 
   return (
     <div>
@@ -12,7 +14,7 @@ const ImageCanvas = (props) => {
           Certificate Generator
         </Typography>
       </AppBar>
-      <CertificateGeneratorByImage />
+      <CertificateGeneratorByImage data={props.location.state} />
     </div>
   )
 }

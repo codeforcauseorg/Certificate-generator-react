@@ -60,22 +60,24 @@ const useStyles = makeStyles((theme) => ({
     width: '120px'
   },
   btn: {
-    margin: theme.spacing(2, 1, 0),
+    margin: theme.spacing(2, 2, 0),
     padding: theme.spacing(1.5, 2)
   }
 }))
 
-function CertificateGeneratorByImage() {
+function CertificateGeneratorByImage({ data }) {
   const classes = useStyles()
   const canvas = useRef()
   let ctx = null
 
-  const currentValue = templates.png[0].text
-
-  const [textDrawProperties, setTextDrawProperties] = useState(currentValue)
+  const [textDrawProperties, setTextDrawProperties] = useState(templates.png[0].text)
   const [open, setOpen] = React.useState(false)
+  const [state, forceUpdate] = useState(false)
 
-  console.log(textDrawProperties)
+  useEffect(() => {
+    setTextDrawProperties(modifyield(textDrawProperties, data[0]))
+  }, [])
+
   useEffect(() => {
     // dynamically assign the width and height to canvas
     const canvasEle = canvas.current
@@ -84,7 +86,6 @@ function CertificateGeneratorByImage() {
     imageObj1.onload = function () {
       canvasEle.width = imageObj1.width
       canvasEle.height = imageObj1.height
-      console.log(imageObj1.height + '--------' + imageObj1.width)
     }
     // get context of the canvas
     ctx = canvasEle.getContext('2d')
@@ -112,6 +113,8 @@ function CertificateGeneratorByImage() {
     pdf.save(`${name}.pdf`)
   }
 
+  console.log(data)
+
   function updateCanvas() {
     // var {x, y} = cordinates
     const canvasEle = canvas.current
@@ -120,11 +123,12 @@ function CertificateGeneratorByImage() {
     imageObj1.src = 't1.png'
     imageObj1.onload = function () {
       ctx.drawImage(imageObj1, 0, 0)
-      textDrawProperties.map((text) => {
+      textDrawProperties.map((text, index) => {
         ctx.font = `${text.size}pt Montserrat`
         ctx.fillStyle = 'white'
-        ctx.fillText(text.title, text.x, text.y)
+        ctx.fillText(data[1][index].title, text.x, text.y)
       })
+      forceUpdate(true)
     }
   }
 
@@ -163,28 +167,9 @@ function CertificateGeneratorByImage() {
       data: {
         template: 't1.png',
         textProps: [
-          textDrawProperties,
-          [
-            {
-              title: 'Rishu',
-              x: 289,
-              y: 200,
-              size: 37
-            },
-            {
-              title: 'Anuj  Garg',
-              x: 340,
-              y: 440,
-              size: 18
-            },
-            {
-              title: 'Ganga Chartvedi',
-              x: 560,
-              y: 440,
-              size: 18
-            }
-          ]
-        ]
+          ...textDrawProperties,
+        ],
+        csv: [...data]
       }
     })
       .then((res) => {
@@ -211,11 +196,14 @@ function CertificateGeneratorByImage() {
           {textDrawProperties.map((properties, index) => (
             <li key={index}>
               <div style={{ display: 'block', marginTop: '20px' }}>
-                <TextField
+                {/* <TextField
                   name="title"
                   value={properties.title}
                   onChange={handleChange(index)}
-                />
+                /> */}
+                <Typography style={{ display: 'inline-block', marginRight: '26px' }}>
+                  {properties.title}
+                </Typography>
                 <Fab
                   variant="extended"
                   size="small"
@@ -275,6 +263,7 @@ function CertificateGeneratorByImage() {
           ))}
         </ul>
         <ButtonComponent
+          disabled={textDrawProperties.length === data[0].length}
           style={{ backgroundColor: '#f9af28' }}
           title="Add Field"
           className={classes.btn}
@@ -283,6 +272,7 @@ function CertificateGeneratorByImage() {
         <ButtonComponent
           className={classes.btn}
           title="Reset To Default"
+          style={{ backgroundColor: '#ee6401' }}
           onClick={() => {
             resetToDefault()
           }}
@@ -290,13 +280,18 @@ function CertificateGeneratorByImage() {
         <ButtonComponent
           className={classes.btn}
           title="Download"
-          style={{
-            backgroundColor: '#03506a'
-          }}
           onClick={() => {
             const c = canvas.current
             downloadPdf(c.toDataURL('png'), 'certificate-pdf')
             downloadImage(c.toDataURL('png'), 'certificate-image')
+          }}
+        />
+        <ButtonComponent
+          className={classes.btn}
+          title="Send to servers"
+          style={{ backgroundColor: '#03506a' }}
+          onClick={() => {
+            sendReq()
           }}
         />
         <Divider style={{ marginTop: '0vh' }} />
@@ -312,12 +307,6 @@ function CertificateGeneratorByImage() {
           <Typography style={{ display: 'inline' }}>Close</Typography>
         </div>
       </Drawer>
-      <ButtonComponent
-        title="Send to servers"
-        onClick={() => {
-          sendReq()
-        }}
-      />
 
       <canvas ref={canvas}></canvas>
       {!open ? (
@@ -331,10 +320,26 @@ function CertificateGeneratorByImage() {
           {open ? <CloseIcon /> : <EditIcon />}
         </Fab>
       ) : (
-        <></>
-      )}
+          <></>
+        )}
     </div>
   )
+}
+
+function modifyield(defaultArray, dataArray) {
+  while (dataArray.length > defaultArray.length) {
+    defaultArray.push({
+      title: 'Title',
+      x: Math.floor(Math.random() * 100) + 80,
+      y: Math.floor(Math.random() * 100) + 80,
+      size: Math.floor(Math.random() * 100) + 10
+    })
+  }
+  const deleteCount = defaultArray.length - dataArray.length
+  if (dataArray.length < defaultArray.length) {
+    defaultArray.splice(-1, deleteCount)
+  }
+  return defaultArray;
 }
 
 export default CertificateGeneratorByImage
