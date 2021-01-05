@@ -1,11 +1,11 @@
 # certificate Generator 
 
 **setup**:
-  1. run client with:
+  1. run client with:<br />
       a. cd client<br />
       b. npm install<br />
       c. npm run start<br />
-  2. run server (on different terminal) 
+  2. run server (on different terminal) <br />
       a. cd server<br />
       b. npm install<br />
       c. npm run start<br />
