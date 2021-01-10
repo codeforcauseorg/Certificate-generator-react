@@ -24,13 +24,16 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#ee6401',
     width: 'max-content',
     padding: '12px 18px',
-    borderRadius: '6px'
+    borderRadius: '6px',
+    marginTop: '32px',
+    margin: 'auto'
   },
   link: {
     textDecoration: 'none',
     color: '#fff',
     width: 'max-content',
-    display: 'block'
+    display: 'block',
+    margin: 'auto'
   }
 }))
 
@@ -129,6 +132,7 @@ const CsvReaderComponent = () => {
         ''
       ) : (
         <Autocomplete
+          style={{ margin: '32px auto', width: '80%' }}
           multiple
           id="tags-outlined"
           options={columns}

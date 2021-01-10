@@ -48,6 +48,7 @@ const themeConfig = {
     background: {
       default: '#F5F5F5',
       dark: '#f4f6f8',
+      primary: '#F1002D',
       paper: '#e0dee1' // background
     },
     primary: {

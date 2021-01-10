@@ -70,7 +70,9 @@ function CertificateGeneratorByImage({ data }) {
   const canvas = useRef()
   let ctx = null
 
-  const [textDrawProperties, setTextDrawProperties] = useState(templates.png[0].text)
+  const [textDrawProperties, setTextDrawProperties] = useState(
+    templates.png[0].text
+  )
   const [open, setOpen] = React.useState(false)
   const [state, forceUpdate] = useState(false)
 
@@ -166,9 +168,7 @@ function CertificateGeneratorByImage({ data }) {
       method: 'POST',
       data: {
         template: 't1.png',
-        textProps: [
-          ...textDrawProperties,
-        ],
+        textProps: [...textDrawProperties],
         csv: [...data]
       }
     })
@@ -201,7 +201,9 @@ function CertificateGeneratorByImage({ data }) {
                   value={properties.title}
                   onChange={handleChange(index)}
                 /> */}
-                <Typography style={{ display: 'inline-block', marginRight: '26px' }}>
+                <Typography
+                  style={{ display: 'inline-block', marginRight: '26px' }}
+                >
                   {properties.title}
                 </Typography>
                 <Fab
@@ -320,8 +322,8 @@ function CertificateGeneratorByImage({ data }) {
           {open ? <CloseIcon /> : <EditIcon />}
         </Fab>
       ) : (
-          <></>
-        )}
+        <></>
+      )}
     </div>
   )
 }
@@ -339,7 +341,7 @@ function modifyield(defaultArray, dataArray) {
   if (dataArray.length < defaultArray.length) {
     defaultArray.splice(-1, deleteCount)
   }
-  return defaultArray;
+  return defaultArray
 }
 
 export default CertificateGeneratorByImage
