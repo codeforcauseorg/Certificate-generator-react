@@ -28,12 +28,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     zIndex: theme.zIndex.drawer + 100,
     backgroundColor: theme.palette.background,
-    paddingLeft: 70,
-    paddingRight: 70,
+    paddingLeft: 60,
+    paddingRight: 60,
     top: 'auto',
     [theme.breakpoints.down('md')]: {
-      paddingLeft: 15,
-      paddingRight: 15
+      paddingLeft: 18,
+      paddingRight: 18
     }
   },
   toolbar: {
@@ -144,7 +144,7 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
         <RouterLink to="/">
           <Logo className={classes.logo} />
         </RouterLink>
-        <Typography variant="h4" style={{ color: '#fff', marginLeft: '16px' }}>
+        <Typography variant="h3" style={{ color: '#D9A179', marginLeft: '10px', marginTop: '-8px' }}>
           Certificate Generator
         </Typography>
         <Hidden smDown>

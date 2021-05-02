@@ -6,7 +6,7 @@ import clsx from 'clsx'
 const useStyles = makeStyles((theme) => ({
   btn: {
     backgroundColor: theme.palette.primary.main,
-    color: '#ffffff',
+    color: '#000000',
     textTransform: 'capitalize',
     [theme.breakpoints.down('sm')]: {
       width: '100%'

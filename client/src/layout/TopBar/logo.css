@@ -1,0 +1,7 @@
+.logo img {
+    border-radius: 15px;
+    margin-left: -4px;
+}
+.logo img:hover {
+    cursor: pointer;
+}

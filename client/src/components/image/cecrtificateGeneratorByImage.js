@@ -78,7 +78,7 @@ function CertificateGeneratorByImage({ data }) {
 
   useEffect(() => {
     setTextDrawProperties(modifyield(textDrawProperties, data[0]))
-  }, [])
+  },[textDrawProperties,data,state])
 
   useEffect(() => {
     // dynamically assign the width and height to canvas
@@ -90,6 +90,7 @@ function CertificateGeneratorByImage({ data }) {
       canvasEle.height = imageObj1.height
     }
     // get context of the canvas
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     ctx = canvasEle.getContext('2d')
   }, [])
 
@@ -125,10 +126,11 @@ function CertificateGeneratorByImage({ data }) {
     imageObj1.src = 't1.png'
     imageObj1.onload = function () {
       ctx.drawImage(imageObj1, 0, 0)
+      // eslint-disable-next-line array-callback-return
       textDrawProperties.map((text, index) => {
         ctx.font = `${text.size}pt Montserrat`
         ctx.fillStyle = 'white'
-        ctx.fillText(data[1][index].title, text.x, text.y)
+        ctx.fillText(data[1][index]?.title, text.x, text.y)
       })
       forceUpdate(true)
     }

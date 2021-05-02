@@ -39,7 +39,7 @@ const HeaderItem = ({ title, link, active }) => {
         })}
       >
         <Typography
-          variant="h6"
+          variant="h5"
           color="textPrimary"
           style={{ fontWeight: 600 }}
         >

@@ -1,4 +1,4 @@
-import { AppBar, makeStyles, Typography } from '@material-ui/core'
+import {  makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
 import CsvReader from '../../components/csv'
 import MainLayout from '../../layout'
@@ -9,10 +9,10 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center'
   },
   heading: {
-    fontSize: 40,
-    fontWeight: 700,
+    fontSize: 45,
+    fontWeight: 800,
     color: theme.palette.primary.main,
-    padding: theme.spacing(3, 0, 6)
+    padding: theme.spacing(3, 1, 6)
   }
 }))
 
@@ -23,7 +23,7 @@ const CsvUpload = () => {
     <MainLayout>
       <div className={classes.root}>
         <Typography align="center" className={classes.heading}>
-          Please Import Your CSV File Here
+           Import Your CSV File Here
         </Typography>
         <CsvReader />
       </div>
