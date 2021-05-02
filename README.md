@@ -18,3 +18,5 @@ On the client, move to csv-upload page:
 - You can also send it to server and get all the certificates for all yourcsv fields
 - certificates on server will be located at `server/public/images/`
 
+Sample file for certi generation [Sample Spreadsheet - Sheet1.csv](https://github.com/codeforcauseorg/Certificate-generator-react/files/6412121/Sample.Spreadsheet.-.Sheet1.csv)
+
