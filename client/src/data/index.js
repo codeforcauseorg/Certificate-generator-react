@@ -6,7 +6,7 @@ const templates = {
       type: 'pdf',
       text: [
         {
-          title: 'Abhishek Kumar Ji',
+          title: 'Abhishek Kumar',
           x: 220,
           y: 360,
           size: 50
@@ -17,7 +17,7 @@ const templates = {
   png: [
     {
       id: 2,
-      location: 't1.png',
+      location: 'template/t1.png',
       type: 'png',
       text: [
         {
@@ -28,13 +28,13 @@ const templates = {
         },
         {
           title: 'Field 2',
-          x: 340,
+          x: 289,
           y: 440,
           size: 18
         },
         {
           title: 'Field 3',
-          x: 560,
+          x: 542,
           y: 440,
           size: 18
         }

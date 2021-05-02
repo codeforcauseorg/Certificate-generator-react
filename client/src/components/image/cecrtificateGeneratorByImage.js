@@ -84,7 +84,7 @@ function CertificateGeneratorByImage({ data }) {
     // dynamically assign the width and height to canvas
     const canvasEle = canvas.current
     var imageObj1 = new Image()
-    imageObj1.src = 't1.png'
+    imageObj1.src = 'template/t1.png'
     imageObj1.onload = function () {
       canvasEle.width = imageObj1.width
       canvasEle.height = imageObj1.height
@@ -122,7 +122,7 @@ function CertificateGeneratorByImage({ data }) {
     const canvasEle = canvas.current
     ctx = canvasEle.getContext('2d')
     var imageObj1 = new Image()
-    imageObj1.src = 't1.png'
+    imageObj1.src = 'template/t1.png'
     imageObj1.onload = function () {
       ctx.drawImage(imageObj1, 0, 0)
       textDrawProperties.map((text, index) => {

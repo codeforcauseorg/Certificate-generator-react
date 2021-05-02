@@ -126,31 +126,41 @@ const CsvReaderComponent = () => {
         addRemoveButton
         onRemoveFile={handleOnRemoveFile}
       >
-        <span>Click or drop your csv file here</span>
+        <img src="/images/icon/csv-icon.png" alt="csv-icon" />
+        <Typography>Click or drop your csv file here</Typography>
       </CSVReader>
+      {csvData === null ? (
+        ''
+      ) : (
+          <div style={{ marginTop: '80px' }}>
+            <Typography>Table Preview</Typography>
+            <Table {...csvData} />
+          </div>
+        )}
       {columns === null ? (
         ''
       ) : (
-        <Autocomplete
-          style={{ margin: '32px auto', width: '80%' }}
-          multiple
-          id="tags-outlined"
-          options={columns}
-          getOptionLabel={(option) => option.column}
-          onChange={(event, newValue) => {
-            show(newValue)
-            // setSelectedColumns(newValue)
-          }}
-          // filterSelectedOptions
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="outlined"
-              placeholder="Select Columns"
-            />
-          )}
-        />
-      )}
+          <Autocomplete
+            style={{ margin: '32px auto', width: '80%' }}
+            multiple
+            id="tags-outlined"
+            options={columns}
+            getOptionLabel={(option) => option.column}
+            onChange={(event, newValue) => {
+              show(newValue)
+              // setSelectedColumns(newValue)
+            }}
+            // filterSelectedOptions
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                placeholder="Select Columns"
+              />
+            )}
+          />
+        )}
+
 
       {selectedData.length === 0 ? (
         <Box className={classes.box}>
@@ -159,24 +169,16 @@ const CsvReaderComponent = () => {
             : 'Please select columns'}
         </Box>
       ) : (
-        <Link
-          to={{ pathname: '/image-canvas', state: selectedData }}
-          className={classes.link}
-        >
-          <Box className={classes.box}>
-            {selectedData.length === 0 ? 'Please select columns' : "Let's Go"}
-          </Box>
-        </Link>
-      )}
+          <Link
+            to={{ pathname: '/image-canvas', state: selectedData }}
+            className={classes.link}
+          >
+            <Box className={classes.box}>
+              {selectedData.length === 0 ? 'Please select columns' : "Let's Go"}
+            </Box>
+          </Link>
+        )}
 
-      {csvData === null ? (
-        ''
-      ) : (
-        <div style={{ marginTop: '80px' }}>
-          <Typography>Table Preview</Typography>
-          <Table {...csvData} />
-        </div>
-      )}
       <Box height="120px" />
     </Container>
   )
