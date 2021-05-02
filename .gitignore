@@ -8,6 +8,7 @@ client/node_modules
 server/node_modules
 server/public/images
 
+client/.eslintcache
 # testing
 /coverage
 
