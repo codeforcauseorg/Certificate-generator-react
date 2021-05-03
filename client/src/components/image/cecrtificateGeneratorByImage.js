@@ -128,7 +128,7 @@ function CertificateGeneratorByImage({ data }) {
       textDrawProperties.map((text, index) => {
         ctx.font = `${text.size}pt Montserrat`
         ctx.fillStyle = 'white'
-        ctx.fillText(data[1][index].title, text.x, text.y)
+        ctx.fillText(data[1][index]?.title, text.x, text.y)
       })
       forceUpdate(true)
     }
