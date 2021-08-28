@@ -1,12 +1,11 @@
 import {
   Box,
-  Button,
   Container,
   makeStyles,
   TextField,
   Typography
 } from '@material-ui/core'
-import React, { useReducer, useState } from 'react'
+import React, { useState } from 'react'
 import { CSVReader } from 'react-papaparse'
 import Table from './table'
 import { Link } from 'react-router-dom'

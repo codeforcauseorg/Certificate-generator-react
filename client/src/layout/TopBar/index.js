@@ -13,15 +13,12 @@ import {
 } from '@material-ui/core'
 import Logo from './Logo'
 import Item from './Item'
-import Account from './Account'
 import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
 import CloseIcon from '@material-ui/icons/Close'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 // import { HashLink as Link } from 'react-router-hash-link';
-import LoginDialog from './LoginDialog'
 // import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
